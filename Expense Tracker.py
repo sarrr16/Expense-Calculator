@@ -19,7 +19,6 @@ def clear():
     textbox2.insert(0, str(0))
 
 def upload():
-            
         file_name = file_entry.get()
         file_path = f"C:/expenses/{file_name}.xlsx"
 
@@ -136,22 +135,26 @@ def upload():
                     ws.cell(row=3, column=13).value = existing_value + value5
             else:
                 return 0
-            
-            pie = PieChart()
-            labels = Reference(ws, min_col=2, min_row=1, max_col=8)
-            data6 = Reference(ws, min_col=2, min_row=4, max_col=8)
-            pie.add_data(data6, from_rows=True)
-            pie.set_categories(labels)
-            pie.title = "Expenses"
-            ws.add_chart(pie, "A7")
+                        
+            def chart():
+                pie = PieChart()
+                labels = Reference(ws, min_col=2, min_row=1, max_col=8)
+                data6 = Reference(ws, min_col=2, min_row=4, max_col=8)
+                pie.add_data(data6, from_rows=True)
+                pie.set_categories(labels)
+                pie.title = "Expenses"
+                ws.add_chart(pie, "A7")
 
-            bar = BarChart()
-            categories = Reference(ws, min_col=2, max_col=9, min_row=1)
-            values = Reference(ws, min_col=2, max_col=9, min_row=2, max_row=3)
-            bar.add_data(values, from_rows= True)
-            bar.set_categories(categories)
-            bar.title = "Expenses"
-            ws.add_chart(bar, "J7")
+                bar = BarChart()
+                categories = Reference(ws, min_col=2, max_col=9, min_row=1)
+                values = Reference(ws, min_col=2, max_col=9, min_row=2, max_row=3)
+                bar.add_data(values, from_rows= True)
+                bar.set_categories(categories)
+                bar.title = "Expenses"
+                ws.add_chart(bar, "J7")   
+
+            b = Button(root, text="Add Chart", width=10, command=chart)
+            b.place(x=157, y=75)  
             
         data333()
         clear()
@@ -186,6 +189,7 @@ label3 = Label(root, text=clicked.get(), font="Arial")
 label3.place(x=60, y=5)
 drop = OptionMenu(root, clicked, *options,  command=lambda event: update_label3(event, label3, clicked))
 drop.place(x=157, y=0)
+
 button2 = Button(root, text="Upload", width=8, command=upload)
 button2.place(x=157, y=45)
 
